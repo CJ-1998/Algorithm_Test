@@ -36,4 +36,8 @@ vector<int> solution(int num, int total) {
     2. 초기 값을 구하는 식: 전체 합=n{2*a+(n-1)d}/2
     3. n=전체 항 개수, a=초기 값, d=등차
     4. 여기서 n은 num이고 d는 연속된 수이니 1
+
+배운 점: 
+    1. 벡터에 값을 넣는 함수는 vector.push_back(값); 이다.
+    2. 연속된 수는 공차가 1인 등차수열이다.
 */
