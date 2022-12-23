@@ -77,5 +77,5 @@ int solution(string A, string B) {
     3. string.compare(string1)로 string 비교. 이때 0이여야 같은 값
     4. char -> string에서 string 생성자로 바꾸면 널문자 추가됨
     5. 그래서 for문으로 하나하나 더해서 바꿔야 함
-    6. find(), rotate(), substr() 함수
+    6. find(), rotate(), substr() 함수 사용 법
 */
