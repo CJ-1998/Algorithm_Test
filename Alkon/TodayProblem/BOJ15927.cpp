@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <stack>
+#include <vector>
 
 using namespace std;
 
@@ -10,98 +10,42 @@ int main(){
     cin>>pal;
     
     int len=pal.length();
-    stack<char> str;
+    vector<char> str;
 
-    if(len%2==0){
-        bool check=false;
-        int big=0;
-        for(int i=0;i<len;i++){
-            if(str.size()==0){
-                str.push(pal[i]);
-            }
-            else{
-                if(str.top()==pal[i]){
-                    check=true;
-                    str.pop();
-                }
-                else{
-                    if(check){
-                        if(str.size()>big)
-                            big=str.size();
+    bool check=false;
+    int big=0;
 
-                        while(!str.empty()) 
-                            str.pop();
-
-                        check=false;
-                        str.push(pal[i]);
-                    }
-                    else{
-                        str.push(pal[i]);
-                    }
-                }
-            }
-        }
-        if(str.size()>big)
-            big=str.size();
-        if(str.size()!=0)
-            answer=big;
-    }
-    else{
-        for(int i=0;i<len;i++){
-            if(i<len/2){
-                str.push(pal[i]);
-            }
-            else if(i>len/2){
-                if(str.top()==pal[i]){
-                    str.pop();
-                }
-            }
-        }
+    for(int i=1;i<len;i++){
         if(str.size()==0){
-            if(pal[len/2-1]!=pal[len/2])
-                answer=len-1;
-            else
-                answer=-1;
+            str.push_back(pal[0]);
+        }
+        else if(str.size()>1){
+            if(str[str.size()-1]==pal[i]){
+                if(big<str.size()){
+                    big=str.size();
+                }
+                str.clear();
+                continue;
+            }
+            if(str[str.size()-2]==pal[i]){
+                if(big<str.size()){
+                    big=str.size();
+                }
+                str.clear();
+                continue;
+            }
         }
         else{
-            while(!str.empty()) 
-                str.pop();
-
-           bool check=false;
-            int big=0;
-            for(int i=0;i<len;i++){
-                if(str.size()==0){
-                    str.push(pal[i]);
+            if(str[str.size()-1]==pal[i]){
+                if(big<str.size()){
+                    big=str.size();
                 }
-                else{
-                    if(str.top()==pal[i]){
-                        check=true;
-                        str.pop();
-                    }
-                    else{
-                        if(check){
-                            if(str.size()>big)
-                                big=str.size();
-
-                            while(!str.empty()) 
-                                str.pop();
-
-                            check=false;
-                            str.push(pal[i]);
-                        }
-                        else{
-                            str.push(pal[i]);
-                        }
-                    }
-                }
+                str.clear();
+                continue;
             }
-            if(str.size()>big)
-                big=str.size();
-            if(str.size()!=0)
-                answer=big;
         }
     }
     
-    cout<<answer<<endl;
+    cout<<big<<endl;
     return 0;
 }
