@@ -7,6 +7,7 @@
         "queue": "cpp",
         "deque": "cpp",
         "xstring": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "algorithm": "cpp"
     }
 }
