@@ -8,6 +8,7 @@
         "deque": "cpp",
         "xstring": "cpp",
         "string": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "cstdio": "cpp"
     }
 }
