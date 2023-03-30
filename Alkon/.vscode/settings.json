@@ -9,6 +9,7 @@
         "xstring": "cpp",
         "string": "cpp",
         "algorithm": "cpp",
-        "cstdio": "cpp"
+        "cstdio": "cpp",
+        "utility": "cpp"
     }
 }
