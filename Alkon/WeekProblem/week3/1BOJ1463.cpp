@@ -24,8 +24,10 @@ int arr[1000001];
 
 int one(int num){
     int answer=0;
-    if(num==1)
+
+    if(num==1){
         return 0;
+    }
 
     if(arr[num]!=0){
         return arr[num];
@@ -33,24 +35,33 @@ int one(int num){
     
     if(num%6==0){
         answer+=min(min(one(num/3),one(num/2)),one(num-1))+1;
-        arr[num/6]=answer;
+        if(arr[num/6]>answer){
+            arr[num/6]=answer;
+        }
         return answer;
     }
     else if(num%3==0){
         answer+=min(one(num/3),one(num-1))+1;
-        arr[num/3]=answer;
+        if(arr[num/3]>answer){
+            arr[num/3]=answer;
+        }
         return answer;
     }
     else if(num%2==0){
-        answer+=min(one(num/2),one(num-1))+1;
-        arr[num/2]=answer;
+        answer+=min(one(num-1),one(num/2))+1;
+        if(arr[num/2]>answer){
+            arr[num/2]=answer;
+        }
         return answer;
     }
     else{
         answer+=one(num-1)+1;
-        arr[num-1]=answer;
+        if(arr[num-1]>answer){
+            arr[num-1]=answer;
+        }
         return answer;
     }
+
 }
 
 int main(){
