@@ -23,8 +23,7 @@ int main(){
         v.push_back(temp);
     }
 
-    if(c=='U'||c=='D'){
-        for(int i=0;i<n;i++){
+    for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
                 if(v[i][j]==1){
                     v[i][j]=1;
@@ -35,18 +34,8 @@ int main(){
                 else if(v[i][j]==5){
                     v[i][j]=2;
                 }
-                else{
-                    v[i][j]=0;
-                }
-            }
-        }
-        reverse(v.begin(),v.end());
-    }
-    else{
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(v[i][j]==1){
-                    v[i][j]=1;
+                else if(v[i][j]==8){
+                    v[i][j]=8;
                 }
                 else{
                     v[i][j]=0;
@@ -54,6 +43,12 @@ int main(){
             }
         }
 
+    if(c=='U'||c=='D'){
+        
+        reverse(v.begin(),v.end());
+    }
+    else{
+        
         for(int i=0;i<n;i++){
             reverse(v[i].begin(),v[i].end());
         }
