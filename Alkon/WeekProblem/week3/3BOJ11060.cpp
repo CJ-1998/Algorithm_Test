@@ -25,16 +25,17 @@ int jump(int index){
     if(v[index]==0 || index>v.size()-1)
         return -1;
 
-    int check=0;
+    int check=987654321;
 
     for(int i=1;i<=v[index];i++){
         int temp=jump(index+i);
         if(temp!=-1){
-            check=temp;
-        }   
+            if(temp<check)
+                check=temp;
+        }
     }
 
-    if(check==0)
+    if(check==987654321)
         return -1;
 
     return check+1;
