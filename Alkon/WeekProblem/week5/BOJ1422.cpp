@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <deque>
 #include <string>
 #include <algorithm>
 
@@ -16,7 +17,7 @@ int main(){
         v.push_back(temp);
     }
 
-    sort(v.begin(),v.end(),greater<int>());
+    sort(v.begin(),v.end());
 
     vector<int> len;
     for(int i=0;i<k;i++){
@@ -27,31 +28,46 @@ int main(){
 
     int* t=new int[n];
 
+    deque <int> one;
+    vector<int> notone;
+
     string answer="";
-    
-    int start=0;
-    int end=n-1;
 
     for(int i=0;i<n;i++){
         if(i>=k){
-            t[end]=v[0];
-            end--;
+            t[i]=v[v.size()-1];
         }
         else{
-            if(len[i]!=1){
-                t[end]=v[i];
-                end--;
-            }
-            else{
-                t[start]=v[i];
-                start++;
-            }
+            t[i]=v[i];
+        }
+        if(to_string(t[i]).size()!=1){
+            notone.push_back(t[i]);
+        }
+        else{
+            one.push_back(t[i]);
         }
     }
 
-    for(int i=0;i<n;i++){
-        string temp=to_string(t[i]);
-        answer+=temp;
+    int len1=one.size();
+    int len2=notone.size();
+
+    if(len[k-1]==1){
+        for(int i=0;i<len1;i++){
+            string temp=to_string(one.back());
+            answer+=temp;
+            one.pop_back();
+        }
+    }
+    else{
+        for(int i=0;i<len1;i++){
+            string temp=to_string(one.back());
+            answer+=temp;
+            one.pop_back();
+        }
+        for(int i=0;i<len2;i++){
+            string temp=to_string(notone[i]);
+            answer+=temp;
+        }
     }
     cout<<answer<<endl;
 

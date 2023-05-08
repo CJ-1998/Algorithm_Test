@@ -15,58 +15,48 @@
     첫째 줄에 연산을 하는 횟수의 최솟값을 출력한다.
 */
 
-#include <cstdio>
+#include <iostream>
 #include <algorithm>
 
 using namespace std;
 
-int arr[1000001];
-
-int one(int num){
-    int answer=0;
-
-    if(num==1){
-        return 0;
-    }
-
-    if(arr[num]!=0){
-        return arr[num];
-    }
-    
-    if(num%6==0){
-        answer+=min(min(one(num/3),one(num/2)),one(num-1))+1;
-        if(arr[num/6]>answer){
-            arr[num/6]=answer;
-        }
-        return answer;
-    }
-    else if(num%3==0){
-        answer+=min(one(num/3),one(num-1))+1;
-        if(arr[num/3]>answer){
-            arr[num/3]=answer;
-        }
-        return answer;
-    }
-    else if(num%2==0){
-        answer+=min(one(num-1),one(num/2))+1;
-        if(arr[num/2]>answer){
-            arr[num/2]=answer;
-        }
-        return answer;
-    }
-    else{
-        answer+=one(num-1)+1;
-        if(arr[num-1]>answer){
-            arr[num-1]=answer;
-        }
-        return answer;
-    }
-
-}
+int arr[1000000];
 
 int main(){
-    int num=0;
-    scanf("%d",&num);
-    printf("%d",one(num));
+
+    arr[1]=0;
+    
+    int cnt=0;
+    cin>>cnt;
+
+    for(int i=2;i<=cnt;i++){
+        int one=987654321;
+        int two=987654321;
+        int minus=987654321;
+
+        if(i%3==0){
+            one=1+arr[i/3];
+        }
+        if(i%2==0){
+            two=1+arr[i/2];
+        }
+        
+        minus=1+arr[i-1];
+        
+
+        int result=min(min(one,two),minus);
+        arr[i]=result;
+    }
+
+    cout<<arr[cnt]<<endl;
+
     return 0;
 }
+
+/*
+배운 점:
+    1. top down 방식보다 bottom up 방식이 시간이 좀 더 빠를 수 있다고 한다. 
+    2. 동적 프로그래밍에서는 작은 문제가 반복해서 일어나고 같은 문제는 구할 때마다 정답이 같다고 한다. 
+    그래서 한번 계산한 작은 문제를 저장해 놓고 다시 사용한다고 한다. 
+    이것이 memozation이다.
+*/
