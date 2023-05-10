@@ -11,54 +11,25 @@
     재환이가 최소 몇 번 점프를 해야 가장 오른쪽 끝 칸으로 갈 수 있는지 출력한다. 만약, 가장 오른쪽 끝으로 갈 수 없는 경우에는 -1을 출력한다.
 */
 
-#include <cstdio>
+#include <iostream>
 #include <vector>
 
 using namespace std;
 
-vector<int> v;
-
-int jump(int index){
-    if(index==v.size()-1)
-        return 1;
-    
-    if(v[index]==0 || index>v.size()-1)
-        return -1;
-
-    int check=987654321;
-
-    for(int i=1;i<=v[index];i++){
-        int temp=jump(index+i);
-        if(temp!=-1){
-            if(temp<check)
-                check=temp;
-        }
-    }
-
-    if(check==987654321)
-        return -1;
-
-    return check+1;
-}
-
 int main(){
-
-    int n=0;
-    scanf("%d",&n);
-
-    for(int i=0;i<n;i++){
-        int temp=0;
-        scanf("%d",&temp);
+    int cnt=0;
+    cin>>cnt;
+    
+    vector<int> v;
+    for(int i=0;i<cnt;i++){
+        int temp;
+        cin>>temp;
         v.push_back(temp);
     }
 
-    int t=jump(0);
-    if(t<0)
-        t=-1;
-    else
-        t--;
+    int arr[1001];
 
-    printf("%d",t);
+    
 
     return 0;
 }
