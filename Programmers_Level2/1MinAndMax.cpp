@@ -35,7 +35,10 @@ string solution(string s) {
 }
 
 /*
+
+
 배운 점:
     1. stringstream 사용법
     2. int to string은 to_string 함수 사용
+    3. -도 같이 묶어서 stoi하면 음수로 인식한다. 
 */
