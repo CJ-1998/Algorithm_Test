@@ -40,11 +40,11 @@ void initTable(){
         table.insert(make_pair(one++,oneStart));
     }
     
-    for(twoStart; twoStart<26; twoStart++){
+    for(twoStart; twoStart<52; twoStart++){
         table.insert(make_pair(two++,twoStart));
     }
     
-    for(threeStart; threeStart<10; threeStart++){
+    for(threeStart; threeStart<62; threeStart++){
         table.insert(make_pair(three++,threeStart));
     }
     
@@ -67,20 +67,45 @@ int main(int argc, char** argv)
 	*/
 	for(test_case = 1; test_case <= T; ++test_case)
 	{
-		string binaryString="";
         string inputString;
         cin>>inputString;
         
-		int iter=inputString.length()/4;
+        int iter=inputString.length()/4;
         int startIndex=0;
         
-        for(int i=0;i<10;i++){
+        string answer="";
+        
+        for(int i=0;i<iter;i++){
+            string binaryString="";
         	for(int j=0;j<4;j++){
-             	   
+                char temp=inputString[startIndex++];
+                //cout<<temp<<endl;
+                int num=table[temp];
+                //cout<<num<<endl;
+                string tempString=intToBinary(num);
+                //cout<<tempString<<endl;
+             	binaryString+=tempString;
+            }
+            
+            int cutIndex=0;
+            for(int k=0;k<3;k++){
+                int binaryNum=binaryToInt(binaryString.substr(cutIndex,cutIndex+8));
+                cutIndex=cutIndex+8;
+                answer+=(char)binaryNum;
             }
         }
-
+        
+		cout<<"#"<<test_case<<" "<<answer<<"\n";
 
 	}
 	return 0;//정상종료시 반드시 0을 리턴해야합니다.
 }
+
+/*
+배운 점:
+    1. map 사용법. map에 값을 넣는 make_pair()부터 map[key]를 이용해 value 꺼내는 것 확인.
+    2. Int To Binary, Binary To Int 코드 작성 방법 확인.
+    3. string a~b까지 자르려면 string.substr(a,b+1); 하면 됨.
+    4. 아스키코드표에서 숫자 값을 (char)하면 해당 문자 나옴.
+    5. string에 char, string 다 더할 수 있음 확인.
+*/
