@@ -40,17 +40,29 @@ int checkLand(int x, int y){
     check[x][y]=1;
     int answer=1;
 
-    if(x-1>=0){
-
+    if(x-1>=0&&y-1>=0){
+        answer+=checkLand(x-1,y-1);
     }
-    if(x+1<b){
-
+    if(x-1>=0){
+        answer+=checkLand(x-1,y);
+    }
+    if(x-1>=0&&y+1<a){
+        answer+=checkLand(x-1,y+1);
     }
     if(y-1>=0){
-
+        answer+=checkLand(x,y-1);
     }
     if(y+1<a){
-
+        answer+=checkLand(x,y+1);
+    }
+    if(x+1<b&&y-1>=0){
+        answer+=checkLand(x+1,y-1);
+    }
+    if(x+1<b){
+        answer+=checkLand(x+1,y);
+    }
+    if(x+1<b&&y+1<a){
+        answer+=checkLand(x+1,y+1);
     }
     return answer;
 }
@@ -70,6 +82,9 @@ int main(){
         if(a==0&&b==0){
             break;
         }
+
+        graph.clear();
+        check.clear();
 
         for(int i=0;i<b;i++){
             vector<int>temp1;
@@ -92,7 +107,6 @@ int main(){
                 }
             }
         }
-
         cout<<answer<<endl;
     }
 
