@@ -14,13 +14,14 @@
 #include <queue>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
 int main(){
     ios_base::sync_with_stdio(false);
-    cin.tie(false);
-    cout.tie(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
     const string LEFT="left";
     const string RIGHT="right";
@@ -35,6 +36,7 @@ int main(){
     vector<string> arrivalPlace;
     queue<int> arrivalLeft;
     queue<int> arrivalRight;
+    vector<int> answerTime;
 
     for(int i=0;i<num;i++){
         int time=0;
@@ -51,6 +53,7 @@ int main(){
 
         arrivalTime.push_back(time);
         arrivalPlace.push_back(place);
+        answerTime.push_back(-1);
     }
 
     int nowTime=0;
@@ -65,21 +68,156 @@ int main(){
         }
 
         if(nowPlace.compare(LEFT)==0){
+            if(arrivalLeft.empty()){
+                if(arrivalRight.front()>nowTime){
+                    nowTime=arrivalRight.front();
+                }
+                nowTime+=movingTime;
+                nowPlace=RIGHT;
+                continue;
+            }
+            
             if(arrivalLeft.front()<=nowTime){
+                int tempCnt=0;
                 
+                while(true){
+                    if(arrivalLeft.empty()){
+                        nowTime+=movingTime;
+                        nowPlace=RIGHT;
+                        break;
+                    }
+                    
+                    if(tempCnt==maxPerson){
+                        nowTime+=movingTime;
+                        nowPlace=RIGHT;
+                        break;
+                    }
+
+
+                    if(arrivalLeft.front()<=nowTime){
+                        int t=arrivalLeft.front();
+                        arrivalLeft.pop();
+                        // int index=find(arrivalTime.begin(),arrivalTime.end(),t)-arrivalTime.begin();
+                        auto it=find(arrivalTime.begin(),arrivalTime.end(),t);
+                        int index=distance(arrivalTime.begin(),it);
+                        while(it!=arrivalTime.end()){
+                            if(arrivalPlace[index].compare(LEFT)==0){
+                                break;
+                            }
+                            else{
+                                it=find(it+1,arrivalTime.end(),t);
+                                index=distance(arrivalTime.begin(),it);
+                                // index=find(it+1,arrivalTime.end(),t)-arrivalTime.begin();
+                            }
+                        }
+                        arrivalTime[index]=-1;
+                        arrivalPlace[index]="";
+                        answerTime[index]=nowTime+movingTime;
+                        cnt++;
+                        tempCnt++;
+                    }
+                    else{
+                        nowTime+=movingTime;
+                        nowPlace=RIGHT;
+                        break;
+                    }
+                }
             }
             else{
-                if(arrivalLeft.front()<arrivalRight.front()){
-                    
+                if(arrivalRight.front()<=nowTime){
+                    nowTime+=movingTime;
+                    nowPlace=RIGHT;
+                    continue;
+                }
+                else{
+                    if(arrivalLeft.front()>arrivalRight.front()){
+                        nowTime=arrivalRight.front();
+                        nowTime+=movingTime;
+                        nowPlace=RIGHT;
+                    }
+                    else{
+                        nowTime=arrivalLeft.front();
+                    }
                 }
             }
         }
         else{
+            if(arrivalRight.empty()){
+                if(arrivalLeft.front()>nowTime){
+                    nowTime=arrivalLeft.front();
+                }
+                nowTime+=movingTime;
+                nowPlace=LEFT;
+                continue;
+            }
 
+            if(arrivalRight.front()<=nowTime){
+                int tempCnt=0;
+
+                while(true){
+                    if(arrivalRight.empty()){
+                        nowTime+=movingTime;
+                        nowPlace=LEFT;
+                        break;
+                    }
+
+                    if(tempCnt==maxPerson){
+                        nowTime+=movingTime;
+                        nowPlace=LEFT;
+                        break;
+                    }
+
+                    if(arrivalRight.front()<=nowTime){
+                        int t=arrivalRight.front();
+                        arrivalRight.pop();
+                        auto it=find(arrivalTime.begin(),arrivalTime.end(),t);
+                        int index=distance(arrivalTime.begin(),it);
+                        while(it!=arrivalTime.end()){
+                            if(arrivalPlace[index].compare(RIGHT)==0){
+                                break;
+                            }
+                            else{
+                                it=find(it+1,arrivalTime.end(),t);
+                                index=distance(arrivalTime.begin(),it);
+                                // index=find(it+1,arrivalTime.end(),t)-arrivalTime.begin();
+                            }
+                        }
+                        arrivalTime[index]=-1;
+                        arrivalPlace[index]="";
+                        answerTime[index]=nowTime+movingTime;
+                        cnt++;
+                        tempCnt++;
+                    }
+                    else{
+                        nowTime+=movingTime;
+                        nowPlace=LEFT;
+                        break;
+                    }
+                }
+            }
+            else{
+                if(arrivalLeft.front()<=nowTime){
+                    nowTime+=movingTime;
+                    nowPlace=LEFT;
+                    continue;
+                }
+                else{
+                    if(arrivalRight.front()>arrivalLeft.front()){
+                        nowTime=arrivalLeft.front();
+                        nowTime+=movingTime;
+                        nowPlace=LEFT;
+                    }
+                    else{
+                        nowTime=arrivalRight.front();
+                    }
+                }
+            }
         }
     }
 
-    
+    for(int i=0;i<answerTime.size();i++){
+        cout<<answerTime[i]<<endl;
+    }
 
     return 0;
 }
