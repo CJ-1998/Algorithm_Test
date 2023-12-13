@@ -1,3 +1,7 @@
+// 실패한 버전.
+// 54%에서 계속 틀림.
+// 왜 틀린지 모르겠음....
+
 /*
 요구사항:
     1. 나룻배는 처음에 왼쪽에 정박해 있다. 
@@ -67,8 +71,11 @@ int main(){
             break;
         }
 
+        // 현재 위치가 왼쪽인 경우
         if(nowPlace.compare(LEFT)==0){
+            // 왼쪽에 이제 사람이 없는 경우
             if(arrivalLeft.empty()){
+                // 오른쪽에 아직 기다리는 사람이 없는 경우
                 if(arrivalRight.front()>nowTime){
                     nowTime=arrivalRight.front();
                 }
@@ -77,23 +84,26 @@ int main(){
                 continue;
             }
             
+            // 왼쪽에 기다리는 사람이 있는 경우 
             if(arrivalLeft.front()<=nowTime){
                 int tempCnt=0;
                 
                 while(true){
+                    // 왼쪽에 기다리는 사람 다 태워서 이제 왼쪽에 사람이 없는 경우 
                     if(arrivalLeft.empty()){
                         nowTime+=movingTime;
                         nowPlace=RIGHT;
                         break;
                     }
                     
+                    // 나룻배에 사람 최대로 태운 경우 
                     if(tempCnt==maxPerson){
                         nowTime+=movingTime;
                         nowPlace=RIGHT;
                         break;
                     }
 
-
+                    // 왼쪽에 기다리는 사람이 있는 경우 
                     if(arrivalLeft.front()<=nowTime){
                         int t=arrivalLeft.front();
                         arrivalLeft.pop();
@@ -116,6 +126,7 @@ int main(){
                         cnt++;
                         tempCnt++;
                     }
+                    // 왼쪽에 기다리는 사람 다 태워서 없는 경우
                     else{
                         nowTime+=movingTime;
                         nowPlace=RIGHT;
@@ -123,26 +134,34 @@ int main(){
                     }
                 }
             }
+            // 왼쪽에 기다리는 사람이 없는 경우 
             else{
+                // 오른쪽에 기다리는 사람이 있는 경우 
                 if(arrivalRight.front()<=nowTime){
                     nowTime+=movingTime;
                     nowPlace=RIGHT;
                     continue;
                 }
+                //오른쪽에 기다리는 사람이 없는 경우 
                 else{
+                    //왼쪽에 오는 사람이 오른쪽에 오는 사람보다 늦게 오는 경우 
                     if(arrivalLeft.front()>arrivalRight.front()){
                         nowTime=arrivalRight.front();
                         nowTime+=movingTime;
                         nowPlace=RIGHT;
                     }
+                    //왼쪽에 오는 사람이 오른쪽에 오는 사람보다 빨리 오는 경우 
                     else{
                         nowTime=arrivalLeft.front();
                     }
                 }
             }
         }
+        //현재 위치가 오른쪽인 경우
         else{
+            //오른쪽에 이제 사람이 없는 경우 
             if(arrivalRight.empty()){
+                //왼쪽에 아직 기다리는 사람이 없는 경우 
                 if(arrivalLeft.front()>nowTime){
                     nowTime=arrivalLeft.front();
                 }
@@ -151,22 +170,26 @@ int main(){
                 continue;
             }
 
+            //오른쪽에 기다리는 사람이 있는 경우 
             if(arrivalRight.front()<=nowTime){
                 int tempCnt=0;
 
                 while(true){
+                    //오른쪽에 기다리는 사람 다 태워서 이제 더이상 없는 경우 
                     if(arrivalRight.empty()){
                         nowTime+=movingTime;
                         nowPlace=LEFT;
                         break;
                     }
 
+                    //나룻배에 최대로 태운 경우 
                     if(tempCnt==maxPerson){
                         nowTime+=movingTime;
                         nowPlace=LEFT;
                         break;
                     }
 
+                    //오른쪽에 기다리는 사람이 있는 경우 
                     if(arrivalRight.front()<=nowTime){
                         int t=arrivalRight.front();
                         arrivalRight.pop();
@@ -188,6 +211,7 @@ int main(){
                         cnt++;
                         tempCnt++;
                     }
+                    //오른쪽에 기다리는 사람 다 태워서 이제 기다리는 사람 없는 경우 
                     else{
                         nowTime+=movingTime;
                         nowPlace=LEFT;
@@ -195,18 +219,24 @@ int main(){
                     }
                 }
             }
+            //오른쪽에 기다리는 사람이 없는 경우 
             else{
+                //왼쪽에 기다리는 사람이 있는 경우 
                 if(arrivalLeft.front()<=nowTime){
                     nowTime+=movingTime;
                     nowPlace=LEFT;
                     continue;
                 }
+
+                //왼쪽에 기다리는 사람이 없는 경우 
                 else{
+                    //왼쪽에 기다리는 사람이 더 빨리 오는 경우 
                     if(arrivalRight.front()>arrivalLeft.front()){
                         nowTime=arrivalLeft.front();
                         nowTime+=movingTime;
                         nowPlace=LEFT;
                     }
+                    //오른쪽에 기다리는 사람이 더 빨리 오는 경우 
                     else{
                         nowTime=arrivalRight.front();
                     }
