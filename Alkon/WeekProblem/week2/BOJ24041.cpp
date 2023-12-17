@@ -26,19 +26,28 @@ vector<int> Si;
 vector<int> Li;
 vector<int> Oi;
 
-int check(int mid){
-    vector<pair<int,int>> germ;
+unsigned long long check(long long mid){
+    vector<pair<unsigned long long,int>> germ;
     for(int i=0;i<N;i++){
         if(Li[i]+1<mid){
-            germ.push_back(make_pair(Si[i]*(mid-Li[i]),Oi[i]));
+            //cout<<"germ: "<<(unsigned long long)Si[i]*(mid-Li[i])<<" ";
+            germ.push_back(make_pair((unsigned long long)Si[i]*(mid-Li[i]),Oi[i]));
         }
         else{
-            germ.push_back(make_pair(Si[i],Oi[i]));
+            //cout<<"germ: "<<Si[i]<<" ";
+            germ.push_back(make_pair((unsigned long long)Si[i],Oi[i]));
         }
     }
+    //cout<<endl;
     sort(germ.begin(),germ.end(),greater<>());
 
-    int allGerm=0;
+    // cout<<"================"<<endl;
+    // for(int i=0;i<N;i++){
+    //     cout<<germ[i].first<<" "<<germ[i].second<<" ";
+    // }
+    // cout<<endl<<"================"<<endl;
+
+    unsigned long long allGerm=0;
     for(int i=0;i<N;i++){
         allGerm+=germ[i].first;
     }
@@ -48,8 +57,8 @@ int check(int mid){
         if(index==N){
             break;
         }
-        if(germ[i].second==1){
-            allGerm-=germ[i].first;
+        if(germ[index].second==1){
+            allGerm-=germ[index].first;
         }
         else{
             i--;
@@ -77,21 +86,36 @@ int main(){
         Oi.push_back(temp3);
     }
 
-    int low=0;
-    int high=1000000000;
+    long long low=1;
+    long long high=400000000;
     while(low+1<high){
-        int mid=(low+high)/2;
-        
+        long long mid=(low+high)/2;
 
-        if(check(low)<=G&&check(mid)<=G){
-            low=mid;
-        }
-        else if(check(high)<=G&&check(mid)<=G){
+        unsigned long long l=check(low);
+        unsigned long long m=check(mid);
+        unsigned long long h=check(high);
+
+        // cout<<"-------------"<<endl;
+        // cout<<l<<" "<<m<<" "<<h<<endl;
+        // cout<<"-------------"<<endl;
+
+        if(h>G&&m>G){
             high=mid;
         }
+        if(h>G&&m<=G){
+            low=mid;
+        }
+        if(l<=G&&m>G){
+            high=mid;
+        }
+        if(l<=G&&m<=G){
+            low=mid;
+        }
+
+        //cout<<low<<" "<<mid<<" "<<high<<endl;
     }
 
-    cout<<low+1;
+    cout<<low;
 
     return 0;
 }
