@@ -112,7 +112,6 @@ int main(){
             low=mid;
         }
 
-        //cout<<low<<" "<<mid<<" "<<high<<endl;
     }
 
     cout<<low;
