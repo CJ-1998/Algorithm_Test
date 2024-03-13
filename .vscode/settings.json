@@ -47,5 +47,6 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "cctype": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
