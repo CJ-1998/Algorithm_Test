@@ -12,6 +12,7 @@
 
 #include<iostream>
 #include<cmath>
+#include<vector>
 
 using namespace std;
 
@@ -21,36 +22,37 @@ int main(){
     cin.tie(NULL); 
     cout.tie(NULL);
 
-    long long start=0;
-    long long end=0;
+    long start=0;
+    long end=0;
     cin>>start>>end;
-    long long count=0;
+    int count=0;
 
-    for(long long i=2; i<=sqrt(end); i++){
-        bool check=false;
-        for(long long j=2;j<=sqrt(i);j++){
-            if(i%j==0){
-                check=true;
-                break;
-            }
-        }
+    vector<int> v(sqrt(end)+1,1);
 
-        if(check==false){
-            long long temp=2;
-            while(true){
-                if(pow(i,temp)<=end){
-                    if(pow(i,temp)>=start)
-                        count++;
-                    temp++;
-                }
-                else{
-                    break;
-                }
+    v[0]=0;
+    v[1]=0;
+
+    vector<int> temp;
+
+    for(int i=2;i<=sqrt(end);i++){
+        if(v[i]!=0){
+            for(int j=i+i;j<=sqrt(end);j=j+i){
+                v[j]=0;
             }
+        temp.push_back(i);
         }
     }
 
-    cout<<count<<endl;
+    for(int i=0;i<temp.size();i++){
+        long t=temp[i];
+        while((double)temp[i]<=(double)end/(double)t){
+            if((double)temp[i]>=(double)start/(double)t)
+                count++;
+            t=t*temp[i];    
+        }
+    }
+
+    cout<<count;
 
     return 0;
 }
@@ -63,4 +65,8 @@ int main(){
 
 1차 푼 시간:
     43m40s
+
+배운 점:
+    1. 에라토스테네스 채 
+    2. 곱하기, 나누기의 속도 차이
 */
