@@ -13,39 +13,36 @@ int main(){
     cin.tie(NULL);
     cout.tie(NULL);
 
-    long long min=0;
-    long long max=0;
+    long long min = 0;
+    long long max = 0;
+
     cin>>min>>max;
 
-    vector<bool> v(max-min+1);
+    vector<long long> arr(max-min+1,0);
 
-    int startIndex=2;
+    long long answer = max-min+1;
 
-    long long cnt=0;
+    for(long long i=2;i*i<=max;i++){
+        
+        long long p = i*i;
 
-    for(int i=startIndex;i*i<=max;i++){
-        long num = i*i;
-        long index=min/num;
+        long long start_index = min/p;
 
-        if(min%num!=0){
-            index++;
+        if(min%p!=0){
+            start_index++;
         }
-
-        while(true){
-            long temp = index*num;
-            if(temp>max){
-                break;
-            }
-
-            if(v[(int)(temp)-min]!=true){
-                v[(int)(temp)-min]=true;
-                cnt++;
-            }
-            index++;
+        
+        for(long long j=start_index;p*j<=max;j++){
+            arr[(int)((p*j)-min)]=1;
         }
     }
 
-    long long answer=max-min+1-cnt;
+    for(int i=0;i<arr.size();i++){
+        if(arr[i]==1){
+            answer--;
+        }
+    }
+
     cout<<answer;
 
     return 0;
